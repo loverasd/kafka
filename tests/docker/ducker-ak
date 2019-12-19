@@ -17,7 +17,7 @@
 
 #
 # Ducker-AK: a tool for running Apache Kafka system tests inside Docker images.
-#
+# Ducker-AK：在Docker映像中运行Apache Kafka系统测试的工具
 # Note: this should be compatible with the version of bash that ships on most
 # Macs, bash 3.2.57.
 #
@@ -32,6 +32,7 @@ ducker_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 kafka_dir="$( cd "${ducker_dir}/../.." && pwd )"
 
 # The memory consumption to allow during the docker build.
+# docker构建期间允许的内存消耗
 # This does not include swap.
 docker_build_memory_limit="3200m"
 

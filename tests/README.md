@@ -1,66 +1,66 @@
-System Integration & Performance Testing
+system integration & performance testing
 ========================================
 
-This directory contains Kafka system integration and performance tests.
+this directory contains kafka system integration and performance tests.
 [ducktape](https://github.com/confluentinc/ducktape) is used to run the tests.  
 (ducktape is a distributed testing framework which provides test runner,
 result reporter and utilities to pull up and tear down services.)
 
-Running tests using docker
+running tests using docker
 --------------------------
-Docker containers can be used for running kafka system tests locally.
-* Requirements
-  - Docker 1.12.3 (or higher) is installed and running on the machine.
-  - Test require that Kafka, including system test libs, is built. This can be done by running ./gradlew clean systemTestLibs
-* Run all tests
+docker containers can be used for running kafka system tests locally.
+* requirements
+  - docker 1.12.3 (or higher) is installed and running on the machine.
+  - test require that kafka, including system test libs, is built. this can be done by running ./gradlew clean systemtestlibs
+* run all tests
 ```
 bash tests/docker/run_tests.sh
 ```
-* Run all tests with debug on (warning will produce log of logs)
+* run all tests with debug on (warning will produce log of logs)
 ```
-_DUCKTAPE_OPTIONS="--debug" bash tests/docker/run_tests.sh | tee debug_logs.txt
+_ducktape_options="--debug" bash tests/docker/run_tests.sh | tee debug_logs.txt
 ```
-* Run a subset of tests
+* run a subset of tests
 ```
-TC_PATHS="tests/kafkatest/tests/streams tests/kafkatest/tests/tools" bash tests/docker/run_tests.sh
+tc_paths="tests/kafkatest/tests/streams tests/kafkatest/tests/tools" bash tests/docker/run_tests.sh
 ```
-* Run a specific tests file
+* run a specific tests file
 ```
-TC_PATHS="tests/kafkatest/tests/client/pluggable_test.py" bash tests/docker/run_tests.sh
+tc_paths="tests/kafkatest/tests/client/pluggable_test.py" bash tests/docker/run_tests.sh
 ```
-* Run a specific test class
+* run a specific test class
 ```
-TC_PATHS="tests/kafkatest/tests/client/pluggable_test.py::PluggableConsumerTest" bash tests/docker/run_tests.sh
+tc_paths="tests/kafkatest/tests/client/pluggable_test.py::pluggableconsumertest" bash tests/docker/run_tests.sh
 ```
-* Run a specific test method
+* run a specific test method
 ```
-TC_PATHS="tests/kafkatest/tests/client/pluggable_test.py::PluggableConsumerTest.test_start_stop" bash tests/docker/run_tests.sh
+tc_paths="tests/kafkatest/tests/client/pluggable_test.py::pluggableconsumertest.test_start_stop" bash tests/docker/run_tests.sh
 ```
-* Run tests with a different JVM
+* run tests with a different jvm
 ```
 bash tests/docker/ducker-ak up -j 'openjdk:11'; tests/docker/run_tests.sh
 ```
 
-* Notes
-  - The scripts to run tests creates and destroys docker network named *knw*.
-   This network can't be used for any other purpose.
-  - The docker containers are named knode01, knode02 etc.
-   These nodes can't be used for any other purpose.
+* notes
+  - the scripts to run tests creates and destroys docker network named *knw*.
+   this network can't be used for any other purpose.
+  - the docker containers are named knode01, knode02 etc.
+   these nodes can't be used for any other purpose.
 
-* Exposing ports using --expose-ports option of `ducker-ak up` command
+* exposing ports using --expose-ports option of `ducker-ak up` command
 
-    If `--expose-ports` is specified then we will expose those ports to random ephemeral ports
-    on the host. The argument can be a single port (like 5005), a port range like (5005-5009)
+    if `--expose-ports` is specified then we will expose those ports to random ephemeral ports
+    on the host. the argument can be a single port (like 5005), a port range like (5005-5009)
     or a combination of port/port-range separated by comma (like 2181,9092 or 2181,5005-5008).
-    By default no port is exposed.
+    by default no port is exposed.
     
-    The exposed port mapping can be seen by executing `docker ps` command. The PORT column
+    the exposed port mapping can be seen by executing `docker ps` command. the port column
     of the output shows the mapping like this (maps port 33891 on host to port 2182 in container):
 
     0.0.0.0:33891->2182/tcp
 
-    Behind the scene Docker is setting up a DNAT rule for the mapping and it is visible in
-    the DOCKER section of iptables command (`sudo iptables -t nat -L -n`), something like:
+    behind the scene docker is setting up a dnat rule for the mapping and it is visible in
+    the docker section of iptables command (`sudo iptables -t nat -l -n`), something like:
 
     <pre>DNAT       tcp  --  0.0.0.0/0      0.0.0.0/0      tcp       dpt:33882       to:172.22.0.2:9092</pre>
 

@@ -16,6 +16,7 @@
  */
 package org.apache.kafka.common.requests;
 
+
 import org.apache.kafka.common.errors.InvalidRequestException;
 import org.apache.kafka.common.errors.UnsupportedVersionException;
 import org.apache.kafka.common.message.RequestHeaderData;
